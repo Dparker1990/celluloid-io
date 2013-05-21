@@ -40,6 +40,7 @@ module Celluloid
         buffer ||= ''.force_encoding(Encoding::ASCII_8BIT)
 
         @read_latch.synchronize do
+          wait_readable
           begin
             read_nonblock(length, buffer)
           rescue ::IO::WaitReadable
@@ -60,6 +61,7 @@ module Celluloid
 
         @write_latch.synchronize do
           while total_written < length
+            wait_writable
             begin
               written = write_nonblock(remaining)
             rescue ::IO::WaitWritable
