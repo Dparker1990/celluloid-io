@@ -21,7 +21,7 @@ module Celluloid
       # FIXME: Y U NO Resolv::Hosts?
       def self.hosts(hostfile = Resolv::Hosts::DefaultFileName)
         hosts = {}
-        File.read(hostfile) do |f|
+        File.open(hostfile) do |f|
           f.each_line do |host_entry|
             entries = host_entry.gsub(/#.*$/, '').gsub(/\s+/, ' ').split(' ')
             addr = entries.shift
