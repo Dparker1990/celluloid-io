@@ -5,7 +5,7 @@ module Celluloid
     # Asynchronous DNS resolver using Celluloid::IO::UDPSocket
     class DNSResolver
       RESOLV_CONF = '/etc/resolv.conf'
-      HOSTS       = '/etc/hosts'
+      HOSTS       = Resolv::Hosts::DefaultFileName
       DNS_PORT    = 53
 
       @mutex = Mutex.new
@@ -19,17 +19,12 @@ module Celluloid
         File.read(config).scan(/^\s*nameserver\s+([0-9.:]+)/).flatten
       end
 
-      # FIXME: Y U NO Resolv::Hosts?
       def self.hosts(hostfile = HOSTS)
-        hosts = {}
-        File.open(hostfile) do |f|
-          f.each_line do |host_entry|
-            entries = host_entry.gsub(/#.*$/, '').gsub(/\s+/, ' ').split(' ')
-            addr = entries.shift
-            entries.each { |e| hosts[e] ||= addr }
-          end
+        File.read(hostfile).scan(/^(?!#).*$/).inject({}) do |memo, host_entry|
+          addr, host = host_entry.split(/\s+/)
+          memo[host] ||= addr
+          memo
         end
-        hosts
       end
 
       def initialize
