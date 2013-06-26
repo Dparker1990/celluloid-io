@@ -5,7 +5,7 @@ module Celluloid
     # Asynchronous DNS resolver using Celluloid::IO::UDPSocket
     class DNSResolver
       RESOLV_CONF = '/etc/resolv.conf'
-      HOSTS       = Resolv::Hosts::DefaultFileName
+      HOSTS       = '/etc/hosts'
       DNS_PORT    = 53
 
       @mutex = Mutex.new
