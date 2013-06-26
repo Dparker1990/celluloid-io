@@ -20,10 +20,10 @@ module Celluloid
       end
 
       def self.hosts(hostfile = HOSTS)
-        File.read(hostfile).scan(/^(?!#).*$/).inject({}) do |memo, host_entry|
+        File.read(hostfile).scan(/^(?!#).*$/).inject({}) do |hosts, host_entry|
           addr, host = host_entry.split(/\s+/)
-          memo[host] ||= addr
-          memo
+          hosts[host] ||= addr
+          hosts
         end
       end
 
