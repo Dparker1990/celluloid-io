@@ -39,6 +39,7 @@ module Celluloid
       end
 
       def resolve(hostname)
+        p @hosts
         if host = @hosts[hostname]
           unless ip_address = resolve_host(host)
             raise Resolv::ResolvError, "invalid entry in hosts file: #{host}"
