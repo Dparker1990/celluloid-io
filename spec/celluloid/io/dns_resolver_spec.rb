@@ -18,7 +18,7 @@ describe Celluloid::IO::DNSResolver do
       if results.is_a?(Array)
         results.all? {|i| i.is_a?(Resolv::IPv4) }.should be_true
       else
-        results.is_a?(Resolv::IPv4).should be_true
+        results.should be_an_instance_of(Resolv::IPv4)
       end
       # www.yahoo.com will be resolved randomly whether multiple or
       # single entry.
@@ -26,7 +26,7 @@ describe Celluloid::IO::DNSResolver do
       if results.is_a?(Array)
         results.all? {|i| i.is_a?(Resolv::IPv4) }.should be_true
       else
-        results.is_a?(Resolv::IPv4).should be_true
+        results.should be_an_instance_of(Resolv::IPv4)
       end
     end
   end
