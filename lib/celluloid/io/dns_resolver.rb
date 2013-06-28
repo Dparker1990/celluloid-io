@@ -40,7 +40,7 @@ module Celluloid
         query = build_query(hostname)
         @socket.send query.encode, 0, @server, DNS_PORT
         data, _ = @socket.recvfrom(512)
-        response = Resolv::DNS::Message.decode(data)
+        p response = Resolv::DNS::Message.decode(data)
 
         addrs = []
         # The answer might include IN::CNAME entries so filters them out
@@ -68,7 +68,6 @@ module Celluloid
       end
 
       def build_query(hostname)
-        p `cat /etc/hosts`
         Resolv::DNS::Message.new.tap do |query|
           query.id = self.class.generate_id
           query.rd = 1
