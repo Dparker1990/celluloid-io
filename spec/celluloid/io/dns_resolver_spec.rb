@@ -16,7 +16,7 @@ describe Celluloid::IO::DNSResolver do
       resolver = Celluloid::IO::DNSResolver.new
       results = resolver.resolve("www.google.com")
       if results.is_a?(Array)
-        results.all? {|i| i.is_a?(Resolv::IPv4) }.should be_true
+        results.all? {|i| i.should be_an_instance_of(Resolv::IPv4) }
       else
         results.should be_an_instance_of(Resolv::IPv4)
       end
@@ -24,7 +24,7 @@ describe Celluloid::IO::DNSResolver do
       # single entry.
       results = resolver.resolve("www.yahoo.com")
       if results.is_a?(Array)
-        results.all? {|i| i.is_a?(Resolv::IPv4) }.should be_true
+        results.all? {|i| i.should be_an_instance_of(Resolv::IPv4) }
       else
         results.should be_an_instance_of(Resolv::IPv4)
       end

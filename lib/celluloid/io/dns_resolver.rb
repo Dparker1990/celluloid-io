@@ -30,12 +30,12 @@ module Celluloid
       end
 
       def resolve(hostname)
-        if host = resolve_hostname(hostname)
-          unless ip_address = resolve_host(host)
-            raise Resolv::ResolvError, "invalid entry in hosts file: #{host}"
-          end
-          return ip_address
-        end
+        # if host = resolve_hostname(hostname)
+        #   unless ip_address = resolve_host(host)
+        #     raise Resolv::ResolvError, "invalid entry in hosts file: #{host}"
+        #   end
+        #   return ip_address
+        # end
 
         query = Resolv::DNS::Message.new.tap do |query|
           query.id = self.class.generate_id
@@ -68,7 +68,7 @@ module Celluloid
       end
 
       def resolv
-        @resolv ||= Resolv.new
+        @resolv ||= Resolv::Hosts.new
       end
 
       def build_query(hostname)
