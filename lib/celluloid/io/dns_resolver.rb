@@ -68,6 +68,7 @@ module Celluloid
       end
 
       def build_query(hostname)
+        p :foo
         Resolv::DNS::Message.new.tap do |query|
           query.id = self.class.generate_id
           query.rd = 1
